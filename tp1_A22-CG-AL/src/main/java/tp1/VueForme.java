@@ -1,6 +1,12 @@
 package tp1;
 
 
+import javafx.scene.Scene;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
