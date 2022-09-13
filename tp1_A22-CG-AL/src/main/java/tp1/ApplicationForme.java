@@ -27,7 +27,7 @@ public class ApplicationForme extends Application {
 		// Mettre le stage au size de la scene
 		stage.setMinHeight(scene.getHeight() + 25);
 		stage.setMinWidth(scene.getWidth() - 120);
-
+		stage.show();
 
 	}
 

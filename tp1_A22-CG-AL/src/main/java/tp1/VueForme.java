@@ -2,6 +2,8 @@ package tp1;
 
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -37,13 +39,14 @@ public class VueForme {
         BorderPane root = new BorderPane();
         GridPane leftGrid = new GridPane();
         TilePane graphs = new TilePane();
+        GridPane topGrid = new GridPane();
+        HBox bottomHBox = new HBox();
 
+        root.setBottom(bottomHBox);
+        root.setLeft(leftGrid);
+        root.setTop(topGrid);
+        root.setCenter(graphs);
 
-
-
-
-
-
-        return null;
+        return new Scene(root, LARGEUR_SCENE, HATEUR_SCENE);
     }
 }
