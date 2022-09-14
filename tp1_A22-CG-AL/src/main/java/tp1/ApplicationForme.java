@@ -2,6 +2,8 @@ package tp1;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -22,11 +24,14 @@ public class ApplicationForme extends Application {
 
 		// Joindre la vue au stage
 		Scene scene = vue.getScene();
+		scene.setFill(Color.web("F5F5F5"));
 		stage.setScene(scene);
 
 		// Mettre le stage au size de la scene
 		stage.setMinHeight(scene.getHeight() + 25);
 		stage.setMinWidth(scene.getWidth() - 120);
+
+		stage.setMaxWidth(1130);
 		stage.show();
 
 	}
