@@ -3,8 +3,9 @@ package tp1;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Contrôleur pour le Tp1
@@ -31,7 +32,7 @@ public class ApplicationForme extends Application {
 		stage.setMinHeight(scene.getHeight() + 25);
 		stage.setMinWidth(scene.getWidth() - 120);
 
-		stage.setMaxWidth(1130);
+		stage.setMaxWidth(1140);
 		stage.show();
 
 	}

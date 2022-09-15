@@ -4,9 +4,14 @@ package tp1;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -45,6 +50,8 @@ public class VueForme {
     public static final double LARGEUR_MIN_SECTION_HAUT = 200.0;
 
 
+    public TilePane graphTile = new TilePane();
+
     public Scene getScene() {
         BorderPane root = new BorderPane();
         GridPane imgSce = getPaneImageScience("./src/res/tp1");
@@ -52,15 +59,92 @@ public class VueForme {
         HBox bottomBox = getBotRow();
         VBox graphCreator = getGraphCreator();
 
+        bottomBox.setBorder(BORDER);
+        graphCreator.setSpacing(20);
+        graphCreator.setPadding(new Insets(20, 20, 20, 20));
+
         root.setTop(topBox);
         root.setLeft(imgSce);
         root.setBottom(bottomBox);
         root.setRight(graphCreator);
+        root.setCenter(graphTile);
 
         return new Scene(root, LARGEUR_SCENE, HATEUR_SCENE);
     }
 
-    public VBox getGraphCreator(){
+    public void ajouterGraphique(Grapher.Parameters parameters) {
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+
+        xAxis.setLabel("x");
+        yAxis.setLabel("y");
+
+        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.getData().add(new Grapher().createGraph(parameters));
+        lineChart.setPrefSize(200.0, 150.0);
+        graphTile.getChildren().add(lineChart);
+    }
+
+    public VBox getXYBoxDonner() {
+        VBox vBox = new VBox();
+
+        for (int i = 0; i < NUMBER_OF_DATA; i++) {
+            vBox.getChildren().add(getXYSetter(i));
+        }
+
+        Button addGraph = new Button("Ajouter un graphique");
+        addGraph.setOnAction((EventHandler) -> {
+            List<Double> xList = new ArrayList<>();
+            List<Double> yList = new ArrayList<>();
+
+            for (int i = 0; i < NUMBER_OF_DATA; i++) {
+                HBox hBox = (HBox) vBox.getChildren().get(i);
+
+                TextField xVal = (TextField) hBox.getChildren().get(1);
+                TextField yVal = (TextField) hBox.getChildren().get(3);
+
+                xList.add(Double.parseDouble(xVal.getText()));
+                yList.add(Double.parseDouble(yVal.getText()));
+            }
+
+            ajouterGraphique(new Grapher.Parameters(xList, yList, "Maurice"));
+        });
+        Button delGraph = new Button("Effacer les graphiques");
+        delGraph.setOnAction(event -> graphTile.getChildren().clear());
+
+        vBox.getChildren().addAll(addGraph, delGraph);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(ESPACE_VERTICAL_ENTRE_DONNEES_DU_GRAPHIQUE);
+        vBox.setPadding(new Insets(20, 20, 20, 20));
+
+        vBox.setBorder(new Border(new BorderStroke(Color.DARKBLUE, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2), null)));
+        return vBox;
+    }
+
+    public HBox getXYSetter(int row) {
+        HBox hBox = new HBox();
+
+        Label labX = new Label("x" + row);
+        labX.setMinWidth(LARGEUR_MIN_ETIQUETTE_DONNEES);
+        Label labY = new Label("y" + row);
+        labY.setMinWidth(LARGEUR_MIN_ETIQUETTE_DONNEES);
+
+        TextField txtX = new TextField();
+        txtX.setMinWidth(LARGEUR_MIN_TEXTFIELD_DONNEES);
+        txtX.setMaxWidth(40);
+        TextField txtY = new TextField();
+        txtY.setMinWidth(LARGEUR_MIN_TEXTFIELD_DONNEES);
+        txtY.setMaxWidth(40);
+
+        hBox.getChildren().addAll(labX, txtX, labY, txtY);
+        hBox.setSpacing(EXPACEMENT_ENTRE_X_Y);
+
+        hBox.setAlignment(Pos.CENTER);
+
+        return hBox;
+    }
+
+    public VBox getGraphCreator() {
         VBox vbox = new VBox();
 
         Label labelAuteurs = new Label("Auteurs");
@@ -68,19 +152,26 @@ public class VueForme {
         ObservableList<String> names = FXCollections.observableArrayList("Christophe Guérin", "Adam Lidam");
 
         auteurs.getItems().addAll("Christophe Guérin", "Adam Lidam");
-        auteurs.prefHeightProperty().bind(Bindings.size(names).multiply(24));
+        auteurs.minHeightProperty().bind(Bindings.size(names).multiply(24));
+        auteurs.maxHeightProperty().bind(Bindings.size(names).multiply(48));
+
+        auteurs.maxHeight(20.0);
+
+        vbox.setVgrow(auteurs, Priority.ALWAYS);
 
         vbox.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        vbox.getChildren().addAll(labelAuteurs, auteurs);
+        vbox.getChildren().addAll(labelAuteurs, auteurs, getXYBoxDonner());
 
         vbox.setAlignment(Pos.CENTER);
         return vbox;
     }
 
 
-    public HBox getBotRow(){
+    public HBox getBotRow() {
         HBox hbox = new HBox();
+
+        EventHandler<ActionEvent> showAlert = new ActionGenerer();
 
         Button generer = new Button("Générer");
         Button reini = new Button("Rénitialiser");
@@ -90,13 +181,17 @@ public class VueForme {
         reini.setMaxWidth(350);
         quitter.setMaxWidth(350);
 
-        generer.setMaxWidth(50);
+        generer.setMinWidth(50);
         reini.setMinWidth(50);
         quitter.setMinWidth(50);
 
         generer.setPrefWidth(75);
         reini.setPrefWidth(75);
         quitter.setPrefWidth(75);
+
+        generer.setOnAction(showAlert);
+        reini.setOnAction(showAlert);
+        quitter.setOnAction(showAlert);
 
         hbox.getChildren().addAll(generer, reini, quitter);
         hbox.setSpacing(ESPACE_ENTRE_BOUTONS_BAS);
@@ -108,14 +203,14 @@ public class VueForme {
         return hbox;
     }
 
-    public HBox getTopRow(String path){
+    public HBox getTopRow(String path) {
         HBox hbox = new HBox();
 
         File dossier = new File(path);
         File[] files = dossier.listFiles();
 
         assert files != null;
-        for (File file : files){
+        for (File file : files) {
             ImageView imageView = new ImageView(new Image(file.toURI().toString()));
             imageView.setFitHeight(TOP_IMAGE_HAUTEUR);
             imageView.setFitWidth(TOP_IMAGE_LARGEUR);
@@ -127,7 +222,7 @@ public class VueForme {
         return hbox;
     }
 
-    public GridPane getPaneImageScience(String path){
+    public GridPane getPaneImageScience(String path) {
         GridPane gridPane = new GridPane();
 
         File dossier = new File(path);
