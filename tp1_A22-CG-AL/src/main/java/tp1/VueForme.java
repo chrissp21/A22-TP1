@@ -28,30 +28,80 @@ import java.util.List;
 /**
  * Vue pour le Tp1 sur les équations
  *
- * @author Martin Simoneau
+ * @author Adam Lidam Christophe Guerin
  * version avec les équations
  */
 public class VueForme {
 
+    /**
+     *Couleur des bordes
+     */
     private final static Border BORDER = new Border(
             new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null, null));
+    /**
+     *Nombre de points dans les graphiques
+     */
     public static final int NUMBER_OF_DATA = 5;
+    /**
+     *Largeur de la scene
+     */
     public static final int LARGEUR_SCENE = 600;
+    /**
+     *Hauteur de la Scene
+     */
     public static final int HATEUR_SCENE = 500;
+    /**
+     *La hauteur des images au niveau superieur de la scene
+     */
     public static final int TOP_IMAGE_HAUTEUR = 40;
+    /**
+     *La Largeur des images au niveau superieur de la scene
+     */
     public static final int TOP_IMAGE_LARGEUR = 100;
+    /**
+     *Taille de base des images de la grid pane de gauche
+     */
     public static final int IMAGE_GAUCHE_TAILLE_SIMPLE = 50;
+    /**
+     *L'espace entre les boutons au bas de la scene
+     */
     public static final int ESPACE_ENTRE_BOUTONS_BAS = 40;
+    /**
+     *Spacing verticale des boutons du graphique
+     */
     public static final int ESPACE_VERTICAL_ENTRE_DONNEES_DU_GRAPHIQUE = 10;
+    /**
+     *La largeur minimale des etiquette de la création des graphique
+     */
     public static final int LARGEUR_MIN_ETIQUETTE_DONNEES = 20;
+    /**
+     *Largeur minimale des textfield qui prennent les donnés pour la creation des graphiques
+     */
     public static final int LARGEUR_MIN_TEXTFIELD_DONNEES = 40;
+    /**
+     *Spacing entre les données x et y du compilateur de donnée
+     */
     public static final int EXPACEMENT_ENTRE_X_Y = 10;
+    /**
+     *Spacing des images au niveau superieur de la scene
+     */
     public static final int ESPACE_ENTRE_IMAGE_HAUT = 5;
+    /**
+     *Largeur minimale des image au niveau superieur de la scène
+     */
     public static final double LARGEUR_MIN_SECTION_HAUT = 200.0;
 
-
+    /**
+     *Tile pane dans le quelle se trouve les graphiques générés
+     */
     public TilePane graphTile = new TilePane();
 
+
+    /**
+     * Crée la scene de l'application en combinant toutes les differentes panes
+     *
+     * @return la scene
+     */
     public Scene getScene() {
         BorderPane root = new BorderPane();
         GridPane imgSce = getPaneImageScience("./src/res/tp1");
@@ -72,6 +122,10 @@ public class VueForme {
         return new Scene(root, LARGEUR_SCENE, HATEUR_SCENE);
     }
 
+    /**
+     * Ajoute un graphique a la tileList
+     * @param parameters les paramettre du graphique a crée
+     */
     public void ajouterGraphique(Grapher.Parameters parameters) {
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -85,6 +139,11 @@ public class VueForme {
         graphTile.getChildren().add(lineChart);
     }
 
+    /**
+     * Création de la Vbox contenant les setters du graphique et les boutons de gestion de la création des graphique
+     *
+     * @return la Vbox de Gestion de graphique
+     */
     public VBox getXYBoxDonner() {
         VBox vBox = new VBox();
 
@@ -121,6 +180,12 @@ public class VueForme {
         return vBox;
     }
 
+
+    /**
+     * Creation de la Hbox dans la quelle les données x et y de la row indiqué sont contenue
+     * @param row la ligne de donnés (x et y) a crée
+     * @return La Hbox des setter de donnée (x et y)
+     */
     public HBox getXYSetter(int row) {
         HBox hBox = new HBox();
 
@@ -144,6 +209,10 @@ public class VueForme {
         return hBox;
     }
 
+    /**
+     * Creation de la Vbox de droite dans la quelle se trouve les auteurs ainsi que les Vbox de création de graphiques
+     * @return La Vbox de droite
+     */
     public VBox getGraphCreator() {
         VBox vbox = new VBox();
 
@@ -168,6 +237,10 @@ public class VueForme {
     }
 
 
+    /**
+     * Création de la Hbox du bas
+     * @return la Hbox du bas
+     */
     public HBox getBotRow() {
         HBox hbox = new HBox();
 
@@ -203,6 +276,11 @@ public class VueForme {
         return hbox;
     }
 
+    /**
+     * Creation de la Hbox du haut dans le quelle se trouve des images
+     * @param path le path du ficher dans lequel se trouve les images
+     * @return La hbox du haut
+     */
     public HBox getTopRow(String path) {
         HBox hbox = new HBox();
 
@@ -222,6 +300,11 @@ public class VueForme {
         return hbox;
     }
 
+    /**
+     * Creation de la gridPane qui contient les 5 images
+     * @param path le ficher dans lequel se trouve les images
+     * @return La gridePane de gauche
+     */
     public GridPane getPaneImageScience(String path) {
         GridPane gridPane = new GridPane();
 

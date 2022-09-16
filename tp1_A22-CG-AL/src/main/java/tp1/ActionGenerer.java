@@ -3,12 +3,22 @@
 
 package tp1;
 
-
+/**
+ * Generateur des auteurs du Tp1
+ *
+ * @author Adam Lidam Christophe Guerin
+ * @version 1.0
+ */
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
 public class ActionGenerer implements EventHandler<ActionEvent> {
+
+    /**
+     * Handler d'une alerte
+     * @param event l'évènement
+     */
     @Override
     public void handle(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

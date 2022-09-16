@@ -9,13 +9,22 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Contrôleur pour le Tp1
- *
-
+ * @author Adam Lidam Christophe Guerin
+   @version 1.0
  *
  */
 public class ApplicationForme extends Application {
+	/**
+	 * La vueForme qui contient la scene
+	 * @see VueForme
+	 */
 	VueForme vue;
 
+	/**
+	 * lanceur et Createur du stage
+	 * @param stage le stage qui va etre afficher
+	 * @throws Exception
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Instancier la vue
