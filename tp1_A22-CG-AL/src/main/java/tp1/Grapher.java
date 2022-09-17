@@ -14,21 +14,24 @@ import java.util.List;
 public class Grapher {
     /**
      * Crée un graphique à partir des paramettres recue
-     * @param params les paramettres du graphique
+     * @param params les parametres du graphique
      * @see Parameters
-     * @return le graphique genere
+     * @return le graphique generé
      */
     public XYChart.Series<Number, Number> createGraph(Parameters params) {
+        //instanciation du graphique
         XYChart.Series<Number, Number> chart = new XYChart.Series<>();
 
-
+        //Utilisation d'un iterator afin de plus facilement parcourir les lists et de crée le graphique
         Iterator iteratorX = params.getxList().iterator();
         Iterator iteratorY = params.getyList().iterator();
 
+        //Parcours des list et ajout des points dans le graphique
         while(iteratorX.hasNext() && iteratorY.hasNext()){
             chart.getData().add(new XYChart.Data<>((Number) iteratorX.next(),(Number) iteratorY.next()));
         }
 
+        //Setter du titre
         chart.setName(params.getName());
         return chart;
     }
@@ -61,8 +64,8 @@ public class Grapher {
         }
 
         /**
-         * Getter de la liste des paramettres en X
-         * @return la list des paramettres en X
+         * Getter de la liste des parametres en X
+         * @return la list des parametres en X
          */
         public List<Double> getxList() {
             return xList;
