@@ -6,17 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Grapher pour le Tp1
+ * Class qui génere les graphiques pour le Tp1
  *
  * @author Adam Lidam Christophe Guerin
  * @version 1.0
  */
 public class Grapher {
     /**
-     * Crée un graphique à partir des paramettres recue
+     * Crée un graphique à partir des parametres reçus
      * @param params les parametres du graphique
      * @see Parameters
-     * @return le graphique generé
+     * @return le graphique géneré
      */
     public XYChart.Series<Number, Number> createGraph(Parameters params) {
         //instanciation du graphique
@@ -26,7 +26,7 @@ public class Grapher {
         Iterator iteratorX = params.getxList().iterator();
         Iterator iteratorY = params.getyList().iterator();
 
-        //Parcours des list et ajout les points (x et y) dans le graphique
+        //Parcours des lists et ajout les points (x et y) dans le graphique
         while(iteratorX.hasNext() && iteratorY.hasNext()){
             chart.getData().add(new XYChart.Data<>((Number) iteratorX.next(),(Number) iteratorY.next()));
         }
@@ -38,6 +38,7 @@ public class Grapher {
 
     /**
      * Class interne de la classe grapher
+     * créateur et accèsseur des parametres du graphique
      */
     public static class Parameters {
 
@@ -73,7 +74,7 @@ public class Grapher {
 
         /**
          * accesseur des paramettre en Y
-         * @return la list des paramettre en Y
+         * @return la list des parametres en Y
          */
         public List<Double> getyList() {
             return yList;

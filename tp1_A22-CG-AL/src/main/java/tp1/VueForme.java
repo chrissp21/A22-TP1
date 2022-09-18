@@ -29,7 +29,7 @@ import java.util.List;
  * Vue pour le Tp1 sur les équations
  *
  * @author Adam Lidam Christophe Guerin
- * version avec les équations
+ * @version avec les équations
  */
 public class VueForme {
 
@@ -92,7 +92,7 @@ public class VueForme {
     public static final double LARGEUR_MIN_SECTION_HAUT = 200.0;
 
     /**
-     * Tile pane dans le quelle se trouve les graphiques générés
+     * Tile pane dans lequel se trouve les graphiques générés
      */
     public TilePane graphTile = new TilePane();
 
@@ -139,7 +139,7 @@ public class VueForme {
     }
 
     /**
-     * Ajoute un graphique a la tileList
+     * Ajoute un graphique à la tilePane
      *
      * @param parameters les paramettre du graphique a crée
      */
@@ -161,14 +161,14 @@ public class VueForme {
     }
 
     /**
-     * Création de la Vbox contenant les setters du graphique et les boutons de gestion de la création des graphique
+     * Création de la Vbox contenant les setters du graphique et les boutons de gestion de la création des graphiques
      *
      * @return la Vbox de Gestion de graphique
      */
     public VBox getXYBoxDonner() {
         VBox vBox = new VBox();
 
-        //Crée et ajoute les differentes lignes de setter de données du graphique
+        //Crée et ajoute les differentes lignes du setter de données du graphique
         for (int i = 0; i < NUMBER_OF_DATA; i++) {
             vBox.getChildren().add(getXYSetter(i));
         }
@@ -213,15 +213,15 @@ public class VueForme {
 
 
     /**
-     * Creation de la Hbox dans la quelle les données x et y de la row indiqué sont contenue
+     * Création de la Hbox dans laquelle les données x et y de la ligne indiquée sont contenues
      *
-     * @param row la ligne de donnés (x et y) a crée
+     * @param row la ligne de données (x et y) à créer
      * @return La Hbox des setter de donnée (x et y)
      */
     public HBox getXYSetter(int row) {
         HBox hBox = new HBox();
 
-        //instanciation des élementes de la row
+        //instanciation des élementes de la ligne
         Label labX = new Label("x" + row);
         labX.setMinWidth(LARGEUR_MIN_ETIQUETTE_DONNEES);
         Label labY = new Label("y" + row);
@@ -236,7 +236,7 @@ public class VueForme {
         txtY.setText(String.valueOf(row));
         txtY.setMaxWidth(40);
 
-        //ajout et conformisation des elements dans la row (Hbox)
+        //ajout et conformisation des éléments dans la ligne (Hbox)
         hBox.getChildren().addAll(labX, txtX, labY, txtY);
         hBox.setSpacing(EXPACEMENT_ENTRE_X_Y);
 
@@ -246,7 +246,7 @@ public class VueForme {
     }
 
     /**
-     * Creation de la Vbox de droite dans la quelle se trouve les auteurs ainsi que les Vbox de création de graphiques
+     * Création de la Vbox de droite dans laquelle se trouve les auteurs ainsi que les Vbox de création de graphiques
      *
      * @return La Vbox de droite
      */
@@ -254,7 +254,7 @@ public class VueForme {
         VBox vbox = new VBox();
 
 
-        //Creation de la section des auteurs
+        //Création de la section des auteurs
         Label labelAuteurs = new Label("Auteurs");
         ListView<String> auteurs = new ListView<>();
         ObservableList<String> names = FXCollections.observableArrayList("Christophe Guérin", "Adam Lidam");
@@ -270,7 +270,7 @@ public class VueForme {
 
         vbox.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        //ajoutes des composante de la vbox de droite
+        //ajoutes des composantes de la vbox de droite
         vbox.getChildren().addAll(labelAuteurs, auteurs, getXYBoxDonner());
 
         //Conformisation de la mise en page de la vbox de droite
@@ -287,7 +287,7 @@ public class VueForme {
     public HBox getBotRow() {
         HBox hbox = new HBox();
 
-        //Creation de l'actionGenerer
+        //Création de l'actionGenerer(L'alerte)
         EventHandler<ActionEvent> showAlert = new ActionGenerer();
 
         //Instanciation des boutons
@@ -328,7 +328,7 @@ public class VueForme {
     }
 
     /**
-     * Creation de la Hbox du haut dans le quelle se trouve des images
+     * Création de la Hbox du haut dans laquelle se trouve des images
      *
      * @param path le path du ficher dans lequel se trouve les images
      * @return La hbox du haut
@@ -340,7 +340,7 @@ public class VueForme {
         File dossier = new File(path);
         File[] files = dossier.listFiles();
 
-        //Parcour toutes le images du fichier et les ajoutes dans la hbox du haut
+        //Parcourt toutes les images du fichier et les ajoute dans la hbox du haut
         assert files != null;
         for (File file : files) {
             ImageView imageView = new ImageView(new Image(file.toURI().toString()));
@@ -356,7 +356,7 @@ public class VueForme {
     }
 
     /**
-     * Creation de la gridPane qui contient les 5 images
+     * Création de la gridPane qui contient les 5 images
      *
      * @param path le ficher dans lequel se trouve les images
      * @return La gridePane de gauche
@@ -366,7 +366,7 @@ public class VueForme {
 
         File dossier = new File(path);
         File[] files = dossier.listFiles();
-        //Instanciation de tous les images du fichier et leur conformisation
+        //Instanciation de toutes les images du fichier et leur conformisation
         assert files != null;
         ImageView image1 = new ImageView(new Image(files[0].toURI().toString()));
         image1.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);

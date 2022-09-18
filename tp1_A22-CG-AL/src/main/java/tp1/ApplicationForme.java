@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Contrôleur pour le Tp1
+ * Classe contrôleur pour le Tp1
  * @author Adam Lidam Christophe Guerin
    @version 1.0
  *
@@ -21,8 +21,8 @@ public class ApplicationForme extends Application {
 	VueForme vue;
 
 	/**
-	 * lanceur et Createur du stage
-	 * @param stage le stage qui va etre afficher
+	 * lanceur et Créateur du stage
+	 * @param stage le stage qui va être affiché
 	 * @throws Exception
 	 */
 	@Override

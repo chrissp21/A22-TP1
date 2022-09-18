@@ -4,7 +4,7 @@
 package tp1;
 
 /**
- * Créateur des Alertes
+ * Class créatrice d'Alertes
  *
  * @author Adam Lidam Christophe Guerin
  * @version 1.0
