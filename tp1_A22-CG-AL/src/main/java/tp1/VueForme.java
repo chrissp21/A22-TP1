@@ -221,7 +221,7 @@ public class VueForme {
     public HBox getXYSetter(int row) {
         HBox hBox = new HBox();
 
-        //instanciation des elementes de la row
+        //instanciation des élementes de la row
         Label labX = new Label("x" + row);
         labX.setMinWidth(LARGEUR_MIN_ETIQUETTE_DONNEES);
         Label labY = new Label("y" + row);

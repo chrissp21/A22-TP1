@@ -9,7 +9,7 @@ import java.util.List;
  * Grapher pour le Tp1
  *
  * @author Adam Lidam Christophe Guerin
- * @version 1
+ * @version 1.0
  */
 public class Grapher {
     /**
@@ -22,16 +22,16 @@ public class Grapher {
         //instanciation du graphique
         XYChart.Series<Number, Number> chart = new XYChart.Series<>();
 
-        //Utilisation d'un iterator afin de plus facilement parcourir les lists et de crée le graphique
+        //Utilisation d'un iterator afin de plus facilement parcourir les lists et de créer le graphique
         Iterator iteratorX = params.getxList().iterator();
         Iterator iteratorY = params.getyList().iterator();
 
-        //Parcours des list et ajout des points dans le graphique
+        //Parcours des list et ajout les points (x et y) dans le graphique
         while(iteratorX.hasNext() && iteratorY.hasNext()){
             chart.getData().add(new XYChart.Data<>((Number) iteratorX.next(),(Number) iteratorY.next()));
         }
 
-        //Setter du titre
+        //titre du graphique
         chart.setName(params.getName());
         return chart;
     }
@@ -42,11 +42,11 @@ public class Grapher {
     public static class Parameters {
 
         /**
-         * List des paramettres en X
+         * List des parametres en X
          */
         private List<Double> xList;
         /**
-         *List des paramettres en Y
+         *List des parametres en Y
          */
         private List<Double> yList;
         /**
@@ -64,7 +64,7 @@ public class Grapher {
         }
 
         /**
-         * Getter de la liste des parametres en X
+         * accesseur de la liste des parametres en X
          * @return la list des parametres en X
          */
         public List<Double> getxList() {
@@ -72,7 +72,7 @@ public class Grapher {
         }
 
         /**
-         * Getter des paramettre en Y
+         * accesseur des paramettre en Y
          * @return la list des paramettre en Y
          */
         public List<Double> getyList() {
@@ -80,7 +80,7 @@ public class Grapher {
         }
 
         /**
-         * Getter du nom du graphique
+         * accesseur du nom du graphique
          * @return le nom
          */
         public String getName() {
