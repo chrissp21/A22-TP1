@@ -21,7 +21,7 @@ public class ApplicationForme extends Application {
 	VueForme vue;
 
 	/**
-	 * lanceur et Créateur du stage
+	 * lance et Crée du stage
 	 * @param stage le stage qui va être affiché
 	 * @throws Exception
 	 */

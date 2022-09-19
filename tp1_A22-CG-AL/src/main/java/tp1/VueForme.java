@@ -12,16 +12,14 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class VueForme {
     /**
      * Tile pane dans lequel se trouve les graphiques générés
      */
-    public TilePane graphTile = new TilePane();
+    private TilePane graphTile = new TilePane();
 
 
     /**
@@ -161,7 +159,7 @@ public class VueForme {
     }
 
     /**
-     * Création de la Vbox contenant les setters du graphique et les boutons de gestion de la création des graphiques
+     * Crée la Vbox contenant les setters du graphique et les boutons de gestion de la création des graphiques
      *
      * @return la Vbox de Gestion de graphique
      */
@@ -180,6 +178,7 @@ public class VueForme {
             List<Double> xList = new ArrayList<>();
             List<Double> yList = new ArrayList<>();
 
+            boolean allNumbers = true;
             //Recolte les données x et y du graphique crée
             for (int i = 0; i < NUMBER_OF_DATA; i++) {
                 HBox hBox = (HBox) vBox.getChildren().get(i);
@@ -187,11 +186,17 @@ public class VueForme {
                 TextField xVal = (TextField) hBox.getChildren().get(1);
                 TextField yVal = (TextField) hBox.getChildren().get(3);
 
-                xList.add(Double.parseDouble(xVal.getText()));
-                yList.add(Double.parseDouble(yVal.getText()));
-            }
+                try {
+                    xList.add(Double.parseDouble(xVal.getText()));
+                    yList.add(Double.parseDouble(yVal.getText()));
+                } catch (NumberFormatException e) {
+                    showAlertGraph().show();
 
-            ajouterGraphique(new Grapher.Parameters(xList, yList, "Maurice"));
+                    allNumbers = false;
+                }
+            }
+            if (allNumbers)
+                ajouterGraphique(new Grapher.Parameters(xList, yList, "Maurice"));
         });
         Button delGraph = new Button("Effacer les graphiques");
 
@@ -211,9 +216,20 @@ public class VueForme {
         return vBox;
     }
 
+    /**
+     * Crée une alerte lorsqu'une des valeurs du graphique est invalide.
+     * @return L'alert généré
+     */
+    public Alert showAlertGraph(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERREUR");
+        alert.setHeaderText("Une des valeurs rentrées n'est pas valide!");
+        alert.setContentText("Toutes les valeurs doivent être des chiffres.\nVeuillez réessayer!");
+        return alert;
+    }
 
     /**
-     * Création de la Hbox dans laquelle les données x et y de la ligne indiquée sont contenues
+     * Crée de la Hbox dans laquelle les données x et y de la ligne indiquée sont contenues
      *
      * @param row la ligne de données (x et y) à créer
      * @return La Hbox des setter de donnée (x et y)
@@ -246,7 +262,7 @@ public class VueForme {
     }
 
     /**
-     * Création de la Vbox de droite dans laquelle se trouve les auteurs ainsi que les Vbox de création de graphiques
+     * Crée la Vbox de droite dans laquelle se trouve les auteurs ainsi que les Vbox de création de graphiques
      *
      * @return La Vbox de droite
      */
@@ -277,12 +293,12 @@ public class VueForme {
         vbox.setAlignment(Pos.CENTER);
         return vbox;
     }
-
-
+    
     /**
-     * Création de la Hbox du bas
-     * @see ActionGenerer
+     * Crée la Hbox du bas
+     *
      * @return la Hbox du bas
+     * @see ActionGenerer
      */
     public HBox getBotRow() {
         HBox hbox = new HBox();
@@ -328,7 +344,7 @@ public class VueForme {
     }
 
     /**
-     * Création de la Hbox du haut dans laquelle se trouve des images
+     * Crée de la Hbox du haut dans laquelle se trouve des images
      *
      * @param path le path du ficher dans lequel se trouve les images
      * @return La hbox du haut
@@ -337,6 +353,7 @@ public class VueForme {
         HBox hbox = new HBox();
 
         //Instanciation du dossier
+
         File dossier = new File(path);
         File[] files = dossier.listFiles();
 
@@ -356,7 +373,7 @@ public class VueForme {
     }
 
     /**
-     * Création de la gridPane qui contient les 5 images
+     * Crée de la gridPane qui contient les 5 images
      *
      * @param path le ficher dans lequel se trouve les images
      * @return La gridePane de gauche
@@ -364,23 +381,29 @@ public class VueForme {
     public GridPane getPaneImageScience(String path) {
         GridPane gridPane = new GridPane();
 
-        File dossier = new File(path);
-        File[] files = dossier.listFiles();
+        ImageView[] array = new ImageView[5];
+
+        for (int i = 0; i < 5; i++){
+            InputStream inputStream = this.getClass().getResourceAsStream("science" + (i + 1) + ".png");
+            assert inputStream != null;
+            ImageView imageView = new ImageView(new Image(inputStream));
+            array[i] = imageView;
+        }
+
         //Instanciation de toutes les images du fichier et leur conformisation
-        assert files != null;
-        ImageView image1 = new ImageView(new Image(files[0].toURI().toString()));
+        ImageView image1 = array[0];
         image1.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
         image1.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        ImageView image2 = new ImageView(new Image(files[1].toURI().toString()));
+        ImageView image2 = array[1];
         image2.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
         image2.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        ImageView image3 = new ImageView(new Image(files[2].toURI().toString()));
+        ImageView image3 = array[2];
         image3.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
         image3.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        ImageView image4 = new ImageView(new Image(files[3].toURI().toString()));
+        ImageView image4 = array[3];
         image4.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
         image4.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
-        ImageView image5 = new ImageView(new Image(files[4].toURI().toString()));
+        ImageView image5 = array[4];
         image5.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
         image5.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
         //Ajout des images dans le gridPane
@@ -392,5 +415,6 @@ public class VueForme {
 
         return gridPane;
     }
+
 }
 

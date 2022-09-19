@@ -38,7 +38,7 @@ public class Grapher {
 
     /**
      * Class interne de la classe grapher
-     * créateur et accèsseur des parametres du graphique
+     * crée et accède aux parametres du graphique
      */
     public static class Parameters {
 
