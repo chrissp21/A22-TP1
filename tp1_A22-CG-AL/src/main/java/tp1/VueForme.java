@@ -107,13 +107,14 @@ public class VueForme {
         BorderPane root = new BorderPane();
 
         //Instancie le pane du centre par une gridpane
-        GridPane imgSce = getPaneImageScience("./src/res/tp1");
+        GridPane imgSce = getPaneImageScience();
 
         //Instancie la Pane du haut par une Hbox
         HBox topBox = getTopRow("./travail/images");
 
         //Instancie la pane du bas par une Hbox
         HBox bottomBox = getBotRow();
+
 
         //Instancie la plane de droite qui sert a la creation de graphique par une Vbox
         VBox graphCreator = getGraphCreator();
@@ -123,14 +124,14 @@ public class VueForme {
 
         //Conforme la pane de droite au spacing et padding demandés
         graphCreator.setSpacing(20);
-        graphCreator.setPadding(new Insets(20, 20, 20, 20));
+        graphCreator.setPadding(new Insets(22, 20, 22, 20));
 
 
         //ajoute les differentes pane à la root
         root.setTop(topBox);
         root.setLeft(imgSce);
-        root.setBottom(bottomBox);
         root.setRight(graphCreator);
+        root.setBottom(bottomBox);
         root.setCenter(graphTile);
 
         return new Scene(root, LARGEUR_SCENE, HATEUR_SCENE);
@@ -218,9 +219,10 @@ public class VueForme {
 
     /**
      * Crée une alerte lorsqu'une des valeurs du graphique est invalide.
+     *
      * @return L'alert généré
      */
-    public Alert showAlertGraph(){
+    public Alert showAlertGraph() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERREUR");
         alert.setHeaderText("Une des valeurs rentrées n'est pas valide!");
@@ -278,9 +280,8 @@ public class VueForme {
         auteurs.getItems().addAll("Christophe Guérin", "Adam Lidam");
         auteurs.minHeightProperty().bind(Bindings.size(names).multiply(24));
         auteurs.maxHeightProperty().bind(Bindings.size(names).multiply(48));
+        auteurs.prefHeightProperty().bind(Bindings.size(names).multiply(24));
 
-        //Conformisation de la mise en page des auteurs
-        auteurs.maxHeight(20.0);
 
         vbox.setVgrow(auteurs, Priority.ALWAYS);
 
@@ -293,7 +294,7 @@ public class VueForme {
         vbox.setAlignment(Pos.CENTER);
         return vbox;
     }
-    
+
     /**
      * Crée la Hbox du bas
      *
@@ -302,6 +303,7 @@ public class VueForme {
      */
     public HBox getBotRow() {
         HBox hbox = new HBox();
+
 
         //Création de l'actionGenerer(L'alerte)
         EventHandler<ActionEvent> showAlert = new ActionGenerer();
@@ -335,6 +337,7 @@ public class VueForme {
 
         //Conformisation de la mise en page de la hbox du bas
         hbox.setSpacing(ESPACE_ENTRE_BOUTONS_BAS);
+
 
         hbox.setHgrow(generer, Priority.ALWAYS);
         hbox.setHgrow(reini, Priority.ALWAYS);
@@ -373,45 +376,43 @@ public class VueForme {
     }
 
     /**
-     * Crée de la gridPane qui contient les 5 images
+     * Crée de la gridPane qui contient les 5 images depuis le ficher ressources
      *
-     * @param path le ficher dans lequel se trouve les images
      * @return La gridePane de gauche
      */
-    public GridPane getPaneImageScience(String path) {
+    public GridPane getPaneImageScience() {
         GridPane gridPane = new GridPane();
 
         ImageView[] array = new ImageView[5];
 
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             InputStream inputStream = this.getClass().getResourceAsStream("science" + (i + 1) + ".png");
             assert inputStream != null;
             ImageView imageView = new ImageView(new Image(inputStream));
             array[i] = imageView;
         }
 
-        //Instanciation de toutes les images du fichier et leur conformisation
-        ImageView image1 = array[0];
-        image1.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        image1.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        ImageView image2 = array[1];
-        image2.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        image2.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        ImageView image3 = array[2];
-        image3.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
-        image3.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        ImageView image4 = array[3];
-        image4.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
-        image4.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
-        ImageView image5 = array[4];
-        image5.setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
-        image5.setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
+        //conformisation des images
+        array[0].setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
+        array[0].setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
+
+        array[1].setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
+        array[1].setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
+
+        array[2].setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
+        array[2].setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE);
+
+        array[3].setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
+        array[3].setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
+
+        array[4].setFitHeight(IMAGE_GAUCHE_TAILLE_SIMPLE);
+        array[4].setFitWidth(IMAGE_GAUCHE_TAILLE_SIMPLE * 2);
         //Ajout des images dans le gridPane
-        gridPane.add(image1, 0, 0, 1, 1);
-        gridPane.add(image2, 0, 1, 1, 1);
-        gridPane.add(image3, 1, 0, 1, 2);
-        gridPane.add(image4, 0, 3, 2, 1);
-        gridPane.add(image5, 0, 2, 2, 1);
+        gridPane.add(array[0], 0, 0, 1, 1);
+        gridPane.add(array[1], 0, 1, 1, 1);
+        gridPane.add(array[2], 1, 0, 1, 2);
+        gridPane.add(array[3], 0, 3, 2, 1);
+        gridPane.add(array[4], 0, 2, 2, 1);
 
         return gridPane;
     }
